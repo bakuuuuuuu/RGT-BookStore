@@ -27,7 +27,7 @@
 
 ### 1. 리포지토리 클론
 ```bash
-git clone https://github.com/username/bookstore.git
+git clone https://github.com/bakuuuuuuu/RGT-BookStore.git
 cd bookstore
 
 ### 2. 프론트엔드 의존성 설치
