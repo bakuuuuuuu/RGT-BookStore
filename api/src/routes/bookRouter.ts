@@ -30,9 +30,9 @@ bookRouter.get('/:id', async (req: Request, res: Response) => {
 
 // 책 등록
 bookRouter.post('/', async (req: Request, res: Response) => {
-  const { title, author, price, description, publication_date, image_url, category } = req.body;
+  const { title, author, price, description, publication_date, image_url, category, quantity } = req.body;
   try {
-    const added = await bookModel.addBook({ title, author, price, description, publication_date, image_url, category });
+    const added = await bookModel.addBook({ title, author, price, description, publication_date, image_url, category, quantity });
     if (added) {
       res.status(201).json({ message: '책이 성공적으로 등록되었습니다.' });
     } else {
@@ -46,10 +46,10 @@ bookRouter.post('/', async (req: Request, res: Response) => {
 // 책 정보 수정
 bookRouter.put('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { title, author, price, description, publication_date, image_url, category } = req.body;
+  const { title, author, price, description, publication_date, image_url, category, quantity } = req.body;
 
   try {
-    const updated = await bookModel.updateBook(Number(id), { title, author, price, description, publication_date, image_url, category });
+    const updated = await bookModel.updateBook(Number(id), { title, author, price, description, publication_date, image_url, category, quantity });
     if (updated) {
       res.status(200).json({ message: '책 정보가 성공적으로 수정되었습니다.' });
     } else {

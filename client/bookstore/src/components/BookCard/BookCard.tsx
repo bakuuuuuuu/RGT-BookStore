@@ -26,6 +26,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
         {book.price && <p>가격 : {formatPrice(book.price)}원</p>}
         {book.category && <p>장르 : {book.category}</p>}
         {book.description && <p>{book.description}</p>}
+        <p>수량 : {book.quantity ?? 0}</p>
       </div>
     </div>
   );

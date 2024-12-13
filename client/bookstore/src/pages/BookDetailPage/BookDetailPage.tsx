@@ -66,6 +66,7 @@ const BookDetailPage: React.FC = () => {
           <p><strong>저자 :</strong> {book.author}</p>
           <p><strong>장르 :</strong> {book.category}</p>
           <p><strong>가격 :</strong> {formatPrice(book.price ?? 0)}원</p>
+          <p><strong>수량 :</strong> {book.quantity}</p>
           <p><strong>출판일 :</strong> {formatPublicationDate(book.publication_date)}</p>
           <p>{book.description}</p>
 

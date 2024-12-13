@@ -44,6 +44,14 @@ const EditBookModal: React.FC<EditBookModalProps> = ({ bookId, onCancel, onSave 
         }
     };
 
+    const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        const numericValue = value.replace(/[^0-9]/g, '');
+        if (book) {
+            setBook((prev) => (prev ? { ...prev, quantity: numericValue ? parseInt(numericValue) : 0 } : null));
+        }
+    };
+
     const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
         if (book) {
@@ -54,10 +62,15 @@ const EditBookModal: React.FC<EditBookModalProps> = ({ bookId, onCancel, onSave 
     const handleSave = async () => {
         if (book) {
             try {
-                await axios.put(`${process.env.REACT_APP_API_URL}/api/books/${bookId}`, book);
+                const formattedBook = {
+                    ...book,
+                    publication_date: book.publication_date ? book.publication_date.split('T')[0] : null,
+                };
+                await axios.put(`${process.env.REACT_APP_API_URL}/api/books/${bookId}`, formattedBook);
                 showSuccessAlert('수정 완료', '책 정보가 성공적으로 수정되었습니다.');
-                onSave(book);
+                onSave(formattedBook);
             } catch (err) {
+                console.error(err);
                 showErrorAlert('수정 실패', '책 정보를 수정하는 중 문제가 발생했습니다.');
             }
         }
@@ -142,6 +155,16 @@ const EditBookModal: React.FC<EditBookModalProps> = ({ bookId, onCancel, onSave 
                                 name="image_url"
                                 value={book.image_url || ''}
                                 onChange={handleChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>수량</label>
+                            <input
+                                type="number"
+                                name="quantity"
+                                value={book.quantity}
+                                onChange={handleQuantityChange}
+                                required
                             />
                         </div>
 

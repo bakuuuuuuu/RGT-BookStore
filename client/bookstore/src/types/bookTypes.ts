@@ -7,4 +7,5 @@ export interface Book {
   publication_date: string | null;
   image_url: string | null;
   category: '소설' | '아동' | '요리' | '여행' | '건강' | '과학';
+  quantity: number;
 }

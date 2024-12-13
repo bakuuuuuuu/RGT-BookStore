@@ -27,6 +27,7 @@ const BookListPage: React.FC = () => {
     publication_date: '',
     image_url: '',
     category: '소설',
+    quantity: 0,
   });
 
   const fetchBooks = async () => {
@@ -79,6 +80,7 @@ const BookListPage: React.FC = () => {
         publication_date: '',
         image_url: '',
         category: '소설',
+        quantity: 0,
       });
 
       setShowModal(false);
@@ -100,6 +102,7 @@ const BookListPage: React.FC = () => {
       publication_date: '',
       image_url: '',
       category: '소설',
+      quantity: 0,
     });
     setShowModal(false);
   };

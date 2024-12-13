@@ -26,6 +26,15 @@ const AddBookModal: React.FC<BookModalProps> = ({ newBook, setNewBook, onAddBook
         }));
     };
 
+    const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        const numericValue = value.replace(/[^0-9]/g, '');
+        setNewBook((prev) => ({
+            ...prev,
+            quantity: numericValue ? parseInt(numericValue) : 0, 
+        }));
+    };
+
     return (
         <div className="modal-overlay">
             <div className="modal-content">
@@ -58,6 +67,16 @@ const AddBookModal: React.FC<BookModalProps> = ({ newBook, setNewBook, onAddBook
                             name="price"
                             value={newBook.price !== undefined && newBook.price !== null ? formatPrice(newBook.price) : ''}
                             onChange={handlePriceChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>수량</label>
+                        <input
+                            type="text"
+                            name="quantity"
+                            value={newBook.quantity || 0}
+                            onChange={handleQuantityChange}
                             required
                         />
                     </div>
