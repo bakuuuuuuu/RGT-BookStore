@@ -11,6 +11,7 @@
 3. [백엔드 설정](#백엔드-설정)
 4. [프로젝트 실행](#프로젝트-실행)
 5. [스크립트](#스크립트)
+6. [MySQL 테이블 구조](#mysql-테이블-구조)
 
 ## 사용된 기술
 
@@ -35,19 +36,36 @@
 
 ### 필수 조건:
 - Node.js (>= 16.0.0)
-- npm (>= 8.0.0)
+- npm (>= 8.0.0) 또는 Yarn (>= 1.0.0)
 
 ### 의존성 설치:
-프론트엔드 디렉토리에서 다음 명령어를 실행하여 필요한 모든 의존성을 설치합니다.
+프론트엔드 디렉토리에서 다음 명령어 중 하나를 실행하여 필요한 모든 의존성을 설치합니다:
 
+**npm 사용:**
 ```bash
 npm install
 ```
 
+**yarn 사용:**
+```bash
+yarn install
+```
+
+`yarn`을 사용하는 것이 더 안정적일 수 있으며, React 19 관련 이슈를 피할 수 있습니다.
+
+### 환경 설정:
+`client/bookstore` 디렉토리에 `.env` 파일을 생성하고 다음과 같은 환경 변수를 설정합니다:
+
+```bash
+REACT_APP_API_URL=server address:port number
+```
+
+여기서 `server address:port number`은 백엔드 서버 주소입니다. 이 값은 실제 배포된 서버 주소로 변경 해야합니다.
+
 ### 사용할 수 있는 스크립트:
-- `npm start`: 개발 모드로 애플리케이션을 실행합니다.
-- `npm run build`: 프로덕션용으로 애플리케이션을 빌드합니다.
-- `npm test`: 애플리케이션의 테스트를 실행합니다.
+- `npm start` 또는 `yarn start`: 개발 모드로 애플리케이션을 실행합니다.
+- `npm run build` 또는 `yarn build`: 프로덕션용으로 애플리케이션을 빌드합니다.
+- `npm test` 또는 `yarn test`: 애플리케이션의 테스트를 실행합니다.
 
 ## 백엔드 설정
 
@@ -56,10 +74,16 @@ npm install
 - MySQL (또는 MySQL 호환 데이터베이스)
 
 ### 의존성 설치:
-백엔드 디렉토리에서 다음 명령어를 실행하여 필요한 모든 의존성을 설치합니다.
+백엔드 디렉토리에서 다음 명령어를 실행하여 필요한 모든 의존성을 설치합니다:
 
 ```bash
 npm install
+```
+
+또는
+
+```bash
+yarn install
 ```
 
 ### 환경 설정:
@@ -73,32 +97,64 @@ DB_NAME=your-database-name
 ```
 
 ### 사용할 수 있는 스크립트:
-- `npm run start`: 개발 모드에서 Nodemon을 사용하여 서버를 실행합니다.
-- `npm run build`: TypeScript 코드를 JavaScript로 컴파일합니다.
-- `npm run serve`: 빌드된 JavaScript 서버를 실행합니다.
+- `npm run start` 또는 `yarn run start`: 개발 모드에서 Nodemon을 사용하여 서버를 실행합니다.
+- `npm run build` 또는 `yarn run build`: TypeScript 코드를 JavaScript로 컴파일합니다.
+- `npm run serve` 또는 `yarn run serve`: 빌드된 JavaScript 서버를 실행합니다.
 
 ## 프로젝트 실행
 
 ### 프론트엔드:
-프론트엔드 서버를 시작하려면 `client` 디렉토리로 이동하여 아래 명령어를 실행합니다:
+프론트엔드 서버를 시작하려면 `client/bookstore` 디렉토리로 이동하여 아래 명령어를 실행합니다:
 
+**npm 사용:**
 ```bash
 npm start
 ```
 
-앱은 [http://localhost:3000](http://localhost:3000)에서 실행됩니다.
+**yarn 사용:**
+```bash
+yarn start
+```
 
 ### 백엔드:
-백엔드 서버를 시작하려면 `server` 디렉토리로 이동하여 아래 명령어를 실행합니다:
+백엔드 서버를 시작하려면 `api` 디렉토리로 이동하여 아래 명령어를 실행합니다:
 
+**npm 사용:**
 ```bash
 npm run start
 ```
 
-서버는 [http://localhost:5000](http://localhost:5000)에서 실행됩니다.
+**yarn 사용:**
+```bash
+yarn run start
+```
 
 ### 데이터베이스:
 MySQL 데이터베이스가 설정되고 연결 가능해야 합니다. 백엔드는 데이터베이스에서 책 정보를 저장하고 검색하는 기능을 사용합니다.
+
+## MySQL 테이블 구조
+
+`books` 테이블의 구조는 다음과 같습니다:
+
+```sql
+mysql> desc books;
++------------------+-------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field            | Type                                            | Null | Key | Default           | Extra                                         |
++------------------+-------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| id               | int                                             | NO   | PRI | NULL              | auto_increment                                |
+| title            | varchar(255)                                    | NO   |     | NULL              |                                               |
+| author           | varchar(255)                                    | YES  |     | NULL              |                                               |
+| price            | decimal(10,2)                                   | YES  |     | NULL              |                                               |
+| description      | text                                            | YES  |     | NULL              |                                               |
+| publication_date | date                                            | YES  |     | NULL              |                                               |
+| category         | enum('소설','아동','요리','여행','건강','과학') | YES  | MUL | 소설              |                                               |
+| image_url        | varchar(255)                                    | YES  |     | NULL              |                                               |
+| created_at       | timestamp                                       | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED                             |
+| updated_at       | timestamp                                       | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++------------------+-------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+```
+
+위의 `books` 테이블 구조는 책의 정보를 저장하는 데 사용되며, 각 책은 고유한 `id`로 구분됩니다. 책의 제목, 저자, 가격, 설명, 출판일, 카테고리, 이미지 URL 등의 정보를 포함합니다.
 
 ## 스크립트
 
