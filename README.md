@@ -176,6 +176,6 @@ mysql> desc books;
 
 ## 시연 영상
 
-[전체 시연 영상 보기](https://youtu.be/0XgAZhRCXAo?si=iHVhOqdbfhs8Gn6_)
+[![시연 영상](https://img.youtube.com/vi/0XgAZhRCXAo/0.jpg)](https://youtu.be/0XgAZhRCXAo)
 
 ---
